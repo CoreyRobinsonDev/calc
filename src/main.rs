@@ -20,6 +20,7 @@ fn main() {
                 screen::clear();
                 buf += &line;
                 ui.history(&buf);
+                ui.conversions(&line);
             }
             Err(error) => println!("error: {error}"),
         };

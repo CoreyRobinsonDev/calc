@@ -57,36 +57,3 @@ pub fn box_(text: impl Into<String>) -> String {
     return out;
 }
 
-pub fn dec_hex(num: impl Into<String>) -> String {
-    let num: String = num.into();
-    todo!()
-}
-
-pub fn dec_bin(num: impl Into<String>) -> String {
-    todo!()
-}
-
-pub fn bin_dec(num: impl Into<String>) -> String {
-    todo!()
-}
-
-pub fn bin_hex(num: impl Into<String>) -> String {
-    todo!()
-}
-
-pub fn hex_bin(num: impl Into<String>) -> String {
-    todo!()
-}
-
-pub fn hex_dec(num: impl Into<String>) -> String {
-    todo!()
-}
-
-pub fn is_hex(num: impl Into<String>) -> bool {
-    let num: String = num.into();
-    todo!()
-}
-
-pub fn is_bin(num: impl Into<String>) -> bool {
-    todo!()
-}
