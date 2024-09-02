@@ -132,11 +132,11 @@ pub fn calc(equation: impl Into<String>) -> Vec<String> {
     };
 
     match op.as_str() {
-        "+" => eq = a + b,
-        "-" => eq = a - b,
-        "/" => eq = a / b,
-        "*" => eq = a * b,
-        "**" => eq = a.pow(b as u32),
+        "+" => eq = a.checked_add(b).unwrap_or(i32::MAX),
+        "-" => eq = a.checked_sub(b).unwrap_or(i32::MIN),
+        "/" => eq = a.checked_div(b).unwrap_or(0),
+        "*" => eq = a.checked_mul(b).unwrap_or(i32::MAX),
+        "**" => eq = a.checked_pow(b as u32).unwrap_or(i32::MAX),
         "%" => eq = a % b,
         "^" => eq = a ^ b,
         "|" => eq = a | b,
