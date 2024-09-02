@@ -8,7 +8,7 @@ impl Ui {
     pub fn new() -> Self {
         Self { 
             history: (9, 10),
-            conversions: (9, 1),
+            solution: (9, 1),
         }
     }
 
@@ -88,41 +88,7 @@ impl Ui {
         println!("{}", red(box_(list)));
     }
 
-    pub fn conversions(&self, num: impl Into<String>) {
-        let mut num: String = num.into();
-        num.remove(num.len()-1);
-        let conv: i128 = num.parse().unwrap_or(0);
-        match conv {
-            -128..=127 => {
-                let conv: i8 = conv.try_into().unwrap();
-                println!("{}", cyan(box_(
-                    format!("{conv:#b} {conv:#x} {conv}") 
-                )));
-            },
-            -32768..=32767 => {
-                let conv: i16 = conv.try_into().unwrap();
-                println!("{}", cyan(box_(
-                    format!("{conv:#b} {conv:#x} {conv}") 
-                )));
-            },
-            -2147483648..=2147483647 => {
-                let conv: i32 = conv.try_into().unwrap();
-                println!("{}", cyan(box_(
-                    format!("{conv:#b} {conv:#x} {conv}") 
-                )));
-            },
-            -9223372036854775808..=9223372036854775807 => {
-                let conv: i64 = conv.try_into().unwrap();
-                println!("{}", cyan(box_(
-                    format!("{conv:#b} {conv:#x} {conv}") 
-                )));
-            }
-            _ => {
-                println!("{}", cyan(box_(
-                    format!("{conv:#b} {conv:#x} {conv}") 
-                )));
-            }
-        };
+    pub fn solution(&self, num: impl Into<String>) {
 
     }
 }
@@ -131,6 +97,6 @@ impl Ui {
 pub struct Ui {
     // (width, height)
     history: (usize, usize),
-    conversions: (usize, usize)
+    solution: (usize, usize)
 }
 
