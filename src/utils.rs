@@ -57,3 +57,92 @@ pub fn box_(text: impl Into<String>) -> String {
     return out;
 }
 
+pub fn bin_dec(binary: impl Into<String>) -> i32 {
+    let binary: String = binary.into();
+    let mut num: i32 = 0;
+
+    for (i, dig) in binary.chars().rev().enumerate() {
+        if dig == '1' {num += 2i32.pow(i as u32)}
+    }
+
+    return num;
+}
+
+pub fn hex_dec(hex: impl Into<String>) -> i32 {
+    let hex: String = hex.into();
+    let mut num: i32 = 0;
+
+    for (i, dig) in hex.chars().rev().enumerate() {
+        match dig {
+            '1' => num += 1 * 16i32.pow(i as u32),
+            '2' => num += 2 * 16i32.pow(i as u32),
+            '3' => num += 3 * 16i32.pow(i as u32),
+            '4' => num += 4 * 16i32.pow(i as u32),
+            '5' => num += 5 * 16i32.pow(i as u32),
+            '6' => num += 6 * 16i32.pow(i as u32),
+            '7' => num += 7 * 16i32.pow(i as u32),
+            '8' => num += 8 * 16i32.pow(i as u32),
+            '9' => num += 9 * 16i32.pow(i as u32),
+            'a' | 'A' => num += 10 * 16i32.pow(i as u32),
+            'b' | 'B' => num += 11 * 16i32.pow(i as u32),
+            'c' | 'C' => num += 12 * 16i32.pow(i as u32),
+            'd' | 'D' => num += 13 * 16i32.pow(i as u32),
+            'e' | 'E' => num += 14 * 16i32.pow(i as u32),
+            'f' | 'F' => num += 15 * 16i32.pow(i as u32),
+            _ => {}
+        }
+    }
+
+    return num;
+}
+
+pub fn calc(equation: impl Into<String>) -> Vec<String> {
+    let equation: String = equation.into();
+    let ops = "%**/+-&|^";
+    let mut a: String = String::new();
+    let mut b: String = String::new();
+    let mut op: String = String::new();
+    let mut eq: i32 = 0;
+
+    for ch in equation.chars() {
+        if ch == '\n' {break}
+        if ops.contains(ch) {
+            op += &ch.to_string();
+            continue;
+        }
+        if op.len() != 0 {
+            b += &ch.to_string();
+        } else {
+            a += &ch.to_string();
+        }
+    }
+    let a: i32 = if a.contains('b') {
+        bin_dec(a)
+    } else if a.contains('x') {
+        hex_dec(a)
+    } else {
+        a.parse().unwrap_or(0)
+    };
+    let b: i32 = if b.contains('b') {
+        bin_dec(b)
+    } else if b.contains('x') {
+        hex_dec(b)
+    } else {
+        b.parse().unwrap_or(0)
+    };
+
+    match op.as_str() {
+        "+" => eq = a + b,
+        "-" => eq = a - b,
+        "/" => eq = a / b,
+        "*" => eq = a * b,
+        "**" => eq = a.pow(b as u32),
+        "%" => eq = a % b,
+        "^" => eq = a ^ b,
+        "|" => eq = a | b,
+        "&" => eq = a & b,
+        _ => {}
+    }
+
+    return vec![a.to_string(),op,b.to_string(),eq.to_string()];
+}

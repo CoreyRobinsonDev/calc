@@ -8,7 +8,7 @@ impl Ui {
     pub fn new() -> Self {
         Self { 
             history: (9, 10),
-            solution: (9, 1),
+            equation: (9, 1),
         }
     }
 
@@ -21,7 +21,11 @@ impl Ui {
         }
 
         println!("{}", red(box_(list.join("\n"))));
-        println!("{}", cyan(box_(format!("{:#b} {:#x} 0", 0, 0))));
+        println!("{}", cyan(box_(
+            format!("{:#b} {:#x} 0 + {:#b} {:#x} 0\n", 
+                0, 0, 0, 0) +
+            &format!("={:#b} {:#x} 0", 0,0)
+        )));
     }
 
     pub fn history(&self, list: impl Into<String>) {
@@ -88,8 +92,16 @@ impl Ui {
         println!("{}", red(box_(list)));
     }
 
-    pub fn solution(&self, num: impl Into<String>) {
-
+    pub fn equation(&self, expression: Vec<String>) {
+        let a: i32 = expression[0].parse().unwrap_or(0);
+        let b: i32 = expression[2].parse().unwrap_or(0);
+        let op = &expression[1];
+        let eq: i32 = expression[3].parse().unwrap_or(0);
+        println!("{}", cyan(box_(
+            format!("{a:#b} {a:#x} {} {} {b:#b} {b:#x} {}\n", 
+                a, op, b) +
+            &format!("={eq:#b} {eq:#x} {}", eq)
+        )));
     }
 }
 
@@ -97,6 +109,6 @@ impl Ui {
 pub struct Ui {
     // (width, height)
     history: (usize, usize),
-    solution: (usize, usize)
+    equation: (usize, usize)
 }
 
